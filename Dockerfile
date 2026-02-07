@@ -8,7 +8,8 @@ COPY .mvn .mvn
 COPY pom.xml .
 COPY src src
 
-RUN ./mvnw clean package -DskipTests
+# ✅ Make mvnw executable before running it
+RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 
 # Step 2: Run the built JAR
 FROM eclipse-temurin:17-jre-alpine
