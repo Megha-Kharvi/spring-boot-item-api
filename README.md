@@ -1,8 +1,15 @@
-# Item API — Spring Boot REST Application
+# Spring Boot Item API
 
-##  Project Description
+## Project Overview
 
-This is a simple Spring Boot REST API that allows you to manage a collection of items using an **in-memory ArrayList** (no database). The project demonstrates basic CRUD-style REST principles, input validation, and Postman testing.
+This is a simple **Java Spring Boot RESTful backend application** that manages a collection of items (similar to products in an e-commerce application). The application uses an **in-memory data store (ArrayList)** to store and retrieve items.
+
+This project was built as part of a task to demonstrate:
+
+* REST API development using Spring Boot
+* Basic CRUD operations (Create & Read)
+* Input validation
+* Deployment to a cloud platform (Railway)
 
 ---
 
@@ -10,31 +17,44 @@ This is a simple Spring Boot REST API that allows you to manage a collection of 
 
 * Java 17
 * Spring Boot
-* Maven
 * Spring Web
 * Spring Validation
-* Postman (for API testing)
+* Maven
+* Railway (for deployment)
 
 ---
 
-## ▶ How to Run the Application
-
-### Step 1 — Clone the project
+##  Project Structure
 
 ```
-git clone <your-repo-link>
+src/main/java/com/example/itemapi/
+│
+├── ItemapiApplication.java
+├── controller/
+│   └── ItemController.java
+├── model/
+│   └── Item.java
+└── service/
+    └── ItemService.java
 ```
 
-### Step 2 — Open in IntelliJ IDEA
+---
 
-Open the project in **IntelliJ IDEA**.
+## ▶ How to Run the Application Locally
 
-### Step 3 — Run the application
+### Option 1: Using IntelliJ IDEA
 
-Run:
+1. Open the project in IntelliJ IDEA
+2. Go to `ItemapiApplication.java`
+3. Click on the green ▶️ Run button
+
+### Option 2: Using Terminal
+
+Run the following commands:
 
 ```
-ItemapiApplication.java
+mvn clean install
+mvn spring-boot:run
 ```
 
 The application will start at:
@@ -45,14 +65,30 @@ http://localhost:8080
 
 ---
 
-##  API Endpoints
+##  Live Demo (Hosted on Railway)
 
-###  1) Add a new Item — **POST**
-
-**URL:**
+Application URL:
 
 ```
-POST http://localhost:8080/api/items
+https://spring-boot-item-api-production.up.railway.app
+```
+
+Health Check Endpoint:
+
+```
+https://spring-boot-item-api-production.up.railway.app/health
+```
+
+---
+
+##  API Endpoints
+
+### 1️ Add a New Item
+
+**Endpoint:**
+
+```
+POST /api/items
 ```
 
 **Request Body (JSON):**
@@ -61,100 +97,82 @@ POST http://localhost:8080/api/items
 {
   "id": 1,
   "name": "Laptop",
-  "description": "Dell Inspiron"
+  "description": "Dell Inspiron Laptop"
 }
 ```
 
-**Success Response (200 OK):**
+**Response:**
 
-```json
-{
-  "id": 1,
-  "name": "Laptop",
-  "description": "Dell Inspiron"
-}
-```
+* `200 OK` with the saved item
 
 ---
 
-###  2) Get All Items — **GET**
+### 2️ Get All Items
 
-**URL:**
+**Endpoint:**
 
 ```
-GET http://localhost:8080/api/items
+GET /api/items
 ```
 
-**Example Response:**
+**Response:**
+
+* Returns a list of all items
+
+Example response:
 
 ```json
 [
   {
     "id": 1,
     "name": "Laptop",
-    "description": "Dell Inspiron"
+    "description": "Dell Inspiron Laptop"
   }
 ]
 ```
 
 ---
 
-###  3) Get Item by ID — **GET**
+### 3️ Get Item by ID
 
-**URL:**
+**Endpoint:**
 
 ```
-GET http://localhost:8080/api/items/1
+GET /api/items/{id}
 ```
 
-**Success Response:**
+Example:
 
-```json
-{
-  "id": 1,
-  "name": "Laptop",
-  "description": "Dell Inspiron"
-}
+```
+GET /api/items/1
 ```
 
-**If item not found:**
-→ `404 Not Found`
+**Responses:**
+
+* `200 OK` → Item found
+* `404 Not Found` → Item does not exist
 
 ---
 
-##  Input Validation Rules
+##  Input Validation
 
-The API enforces the following:
+The API validates input when adding an item:
 
-* `id` → Must be present (`@NotNull`)
-* `name` → Cannot be empty (`@NotBlank`)
-* `description` → Cannot be empty (`@NotBlank`)
+* Name must not be empty
+* ID must be valid
 
-If validation fails → **400 Bad Request**
-
----
-
-##  Project Structure
-
-```
-itemapi
- ├── src/main/java/com/example/itemapi/
- │   ├── ItemapiApplication.java
- │   ├── model/Item.java
- │   ├── service/ItemService.java
- │   └── controller/ItemController.java
- └── pom.xml
-```
+If validation fails, the API returns an appropriate error message.
 
 ---
 
-##  What this project demonstrates
+##  Important Note
 
-* RESTful API design
-* Spring Boot annotations (`@RestController`, `@Service`)
-* In-memory data storage using `ArrayList`
-* Input validation with `@Valid`, `@NotNull`, `@NotBlank`
-* API testing using Postman
+* This application uses **in-memory storage (ArrayList)**, so data will be lost when the application restarts.
+* No database is used as per the task requirement.
 
 ---
 
+##  Author
+
+Megha Kharvi
+Canara Engineering College
